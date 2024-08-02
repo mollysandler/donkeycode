@@ -1,0 +1,16 @@
+ideas: 
+header options: 
+    types of things to type: 
+        random common code words: (if, then, for, const, var, return, etc)
+        common code snippets: (for loop, while loop, do while loop, etc)
+        algorithims: (bubble sort, insertion sort, etc)
+    test modes
+        zen (go until you get bored)
+        timed (15s, 30s, 1 min)
+        by character count (idk what a good amount is but we can figure it out)
+
+    future enhacement vibes
+        picking which language
+
+
+make our own library of algorithims, code snippets, code words

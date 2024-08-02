@@ -1,0 +1,35 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    border-radius: 8%;
+    margin: 0;
+    padding: 10px;
+    color: white;
+    background-color: rgb(55, 54, 58);
+    max-width: 600px;
+}
+
+.nav-item {
+    margin: 0 20px;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+
+.nav-item:hover {
+    color: pink;
+}
+
+.nav-item.active {
+    color: green;
+}

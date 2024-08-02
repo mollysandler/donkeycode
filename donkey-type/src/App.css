@@ -1,11 +1,43 @@
+body {
+  background-color: rgb(78, 77, 82);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+html, body, #root {
+  height: 100%;
+}
 .App {
   text-align: center;
-  margin-top: 50px;
+  color: white;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  background-color: rgb(78, 77, 82);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px; /* Adjust if needed */
+}
+
+.logo {
+  width: 50px; /* Adjust the width as needed */
+  height: 50px; /* Adjust the height as needed */
+  margin-right: 10px; /* Space between image and text */
 }
 
 .word-container {
+  padding-top: 10%;
   font-size: 24px;
   margin-bottom: 20px;
+  width: 80%;
 }
 
 .letter {
@@ -14,11 +46,11 @@
 }
 
 .correct {
-  color: green;
+  color: rgb(18, 85, 18);
 }
 
 .incorrect {
-  color: red;
+  color: rgb(184, 29, 29);
 }
 
 input {
