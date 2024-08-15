@@ -1,0 +1,30 @@
+{
+    "usages": [
+      {
+        "name": "While Loop",
+        "implementation": "while True:\n    print('This will run indefinitely')\n    break"
+      },
+      {
+        "name": "Do-While Loop",
+        "implementation": "i = 0\nwhile True:\n    print(i)\n    i += 1\n    if i >= 5:\n        break"
+      },
+      {
+        "name": "For Loop",
+        "implementation": "for i in range(5):\n    print(i)"
+      },
+      {
+        "name": "If Statement",
+        "implementation": "if x > 10:\n    print('x is greater than 10')\n    # More code here"
+      },
+      {
+        "name": "Elif Statement",
+        "implementation": "if x > 10:\n    print('x is greater than 10')\nelif x == 10:\n    print('x is equal to 10')\nelse:\n    print('x is less than 10')"
+      },
+      {
+        "name": "Function",
+        "implementation": "def greet(name):\n    return f'Hello, {name}!'"
+      }
+    ]
+  }
+  
+  

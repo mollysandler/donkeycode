@@ -1,0 +1,13 @@
+{
+    "words": [
+      "def", "class", "import", "from", "as", "return", "if", "elif", "else", "for", "while", "break", "continue",
+      "pass", "try", "except", "finally", "raise", "with", "yield", "lambda", "global", "nonlocal", "assert", "del",
+      "print", "input", "int", "float", "str", "list", "dict", "set", "tuple", "len", "range", "zip", "map", "filter",
+      "reduce", "enumerate", "sorted", "reversed", "open", "read", "write", "close", "append", "extend", "insert",
+      "remove", "pop", "clear", "copy", "keys", "values", "items", "get", "update", "setdefault", "popitem", "format",
+      "split", "join", "strip", "find", "replace", "startswith", "endswith", "isalpha", "isdigit", "isspace", "isupper",
+      "islower", "capitalize", "title", "casefold", "upper", "lower", "startswith", "endswith", "count", "sort", "reverse",
+      "append", "extend", "insert", "remove", "pop", "clear", "copy", "update", "setdefault", "popitem"
+    ]
+  }
+  

@@ -9,6 +9,7 @@ body {
 html, body, #root {
   height: 100%;
 }
+
 .App {
   text-align: center;
   color: white;
@@ -16,7 +17,6 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   background-color: rgb(78, 77, 82);
 }
 
@@ -24,13 +24,13 @@ html, body, #root {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px; /* Adjust if needed */
+  margin-bottom: 20px;
 }
 
 .logo {
-  width: 50px; /* Adjust the width as needed */
-  height: 50px; /* Adjust the height as needed */
-  margin-right: 10px; /* Space between image and text */
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
 }
 
 .word-container {
@@ -38,6 +38,10 @@ html, body, #root {
   font-size: 24px;
   margin-bottom: 20px;
   width: 80%;
+  white-space: pre-wrap;  /* Preserve white space and line breaks */
+  background-color: rgb(48, 48, 48);  /* Adjust background color if needed */
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .letter {
@@ -46,15 +50,41 @@ html, body, #root {
 }
 
 .correct {
-  color: rgb(18, 85, 18);
+  color: rgb(157, 157, 157);
 }
 
 .incorrect {
-  color: rgb(184, 29, 29);
+  color: rgb(206, 35, 35);
 }
 
 input {
   font-size: 18px;
   padding: 10px;
   width: 300px;
+}
+
+.algorithm-info {
+  margin-bottom: 20px;
+  text-align: left;
+  width: 80%;
+  background-color: rgb(48, 48, 48);  /* Adjust background color if needed */
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+}
+
+.algorithm-info h2 {
+  margin: 0 0 10px;
+  flex: center;
+}
+
+.algorithm-info pre {
+  white-space: pre-wrap;  /* Preserve white space and line breaks */
+  font-size: 16px;
+}
+
+.algorithm-info code {
+  display: block;
+  white-space: pre-wrap;  /* Preserve white space and line breaks */
+  font-family: monospace;
 }

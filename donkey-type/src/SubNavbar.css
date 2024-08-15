@@ -24,6 +24,7 @@
     cursor: pointer;
     padding: 5px 10px;
     transition: color 0.3s;
+    position: relative; /* To contain the dropdown */
 }
 
 .nav-item:hover {
@@ -32,4 +33,35 @@
 
 .nav-item.active {
     color: green;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border-radius: 5px;
+    z-index: 10; /* Ensure it appears above other elements */
+}
+
+.dropdown-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: white; /* Default background color */
+    color: black; /* Default text color */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-item.active {
+    background-color: green; /* Active color for the selected time */
+    color: white; /* Text color when active */
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
 }

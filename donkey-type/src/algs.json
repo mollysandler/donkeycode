@@ -1,0 +1,40 @@
+{
+    "algorithms": {
+      "Bubble Sort": {
+        "name": "Bubble Sort",
+        "description": "Bubble Sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted.",
+        "implementation": "function bubbleSort(arr) {\n  let n = arr.length;\n  for (let i = 0; i < n - 1; i++) {\n    let swapped = false;\n    for (let j = 0; j < n - i - 1; j++) {\n      if (arr[j] > arr[j + 1]) {\n        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];\n        swapped = true;\n      }\n    }\n    if (!swapped) break;\n  }\n  return arr;\n}"
+      },
+      "Selection Sort": {
+        "name": "Selection Sort",
+        "description": "Selection Sort is an in-place comparison sorting algorithm. It divides the input list into two parts: a sorted sublist of items which is built up from left to right, and a sublist of the remaining unsorted items.",
+        "implementation": "function selectionSort(arr) {\n  let n = arr.length;\n  for (let i = 0; i < n - 1; i++) {\n    let minIndex = i;\n    for (let j = i + 1; j < n; j++) {\n      if (arr[j] < arr[minIndex]) {\n        minIndex = j;\n      }\n    }\n    if (minIndex !== i) {\n      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];\n    }\n  }\n  return arr;\n}"
+      },
+      "Insertion Sort": {
+        "name": "Insertion Sort",
+        "description": "Insertion Sort is a simple sorting algorithm that builds the final sorted array one item at a time. It is much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.",
+        "implementation": "function insertionSort(arr) {\n  let n = arr.length;\n  for (let i = 1; i < n; i++) {\n    let key = arr[i];\n    let j = i - 1;\n    while (j >= 0 && arr[j] > key) {\n      arr[j + 1] = arr[j];\n      j = j - 1;\n    }\n    arr[j + 1] = key;\n  }\n  return arr;\n}"
+      },
+      "Merge Sort": {
+        "name": "Merge Sort",
+        "description": "Merge Sort is a divide-and-conquer algorithm that was invented by John von Neumann in 1945. It divides the unsorted list into n sublists, each containing one element, and then repeatedly merges sublists to produce new sorted sublists until there is only one sublist remaining.",
+        "implementation": "function mergeSort(arr) {\n  if (arr.length <= 1) return arr;\n\n  const middle = Math.floor(arr.length / 2);\n  const left = arr.slice(0, middle);\n  const right = arr.slice(middle);\n\n  return merge(mergeSort(left), mergeSort(right));\n}\n\nfunction merge(left, right) {\n  let result = [],\n    leftIndex = 0,\n    rightIndex = 0;\n\n  while (leftIndex < left.length && rightIndex < right.length) {\n    if (left[leftIndex] < right[rightIndex]) {\n      result.push(left[leftIndex]);\n      leftIndex++;\n    } else {\n      result.push(right[rightIndex]);\n      rightIndex++;\n    }\n  }\n\n  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));\n}"
+      },
+      "Binary Search": {
+        "name": "Binary Search",
+        "description": "Binary Search is a fast search algorithm with a run-time complexity of O(log n). This search algorithm works on the principle of divide and conquer. To use binary search, the collection must be sorted.",
+        "implementation": "function binarySearch(arr, target) {\n  let left = 0, right = arr.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (arr[mid] === target) return mid;\n    if (arr[mid] < target) left = mid + 1;\n    else right = mid - 1;\n  }\n\n  return -1;\n}"
+      },
+      "DFS": {
+        "name": "Depth-First Search (DFS)",
+        "description": "Depth-First Search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root (selecting some arbitrary node as the root in the case of a graph) and explores as far as possible along each branch before backtracking.",
+        "implementation": "function dfs(graph, start, visited = new Set()) {\n  visited.add(start);\n\n  graph[start].forEach(neighbor => {\n    if (!visited.has(neighbor)) {\n      dfs(graph, neighbor, visited);\n    }\n  });\n\n  return visited;\n}"
+      },
+      "BFS": {
+        "name": "Breadth-First Search (BFS)",
+        "description": "Breadth-First Search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at the tree root (or an arbitrary node of a graph) and explores the neighbor nodes at the present depth prior to moving on to the nodes at the next depth level.",
+        "implementation": "function bfs(graph, start) {\n  let visited = new Set();\n  let queue = [start];\n\n  while (queue.length > 0) {\n    let node = queue.shift();\n\n    if (!visited.has(node)) {\n      visited.add(node);\n      queue.push(...graph[node].filter(n => !visited.has(n)));\n    }\n  }\n\n  return visited;\n}"
+      }
+    }
+  }
+  
