@@ -1,66 +1,77 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Text } from '@chakra-ui/react';
+import React, { useState, useEffect, useCallback } from "react";
+import { Box, Text } from "@chakra-ui/react";
 
 interface TypeInterfaceProps {
   text: string;
 }
 
 export const TypeInterface: React.FC<TypeInterfaceProps> = ({ text }) => {
-  const [userInput, setUserInput] = useState('');
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const words = text.split(' ');
+  const [characters, setCharacters] = useState(text.split("").map(char => ({ char, status: 'untyped' })));
+  const [currentCharIndex, setCurrentCharIndex] = useState(0);
 
-  const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    if (event.key === 'Backspace') {
-      setUserInput(prev => prev.slice(0, -1));
-    } else if (event.key === ' ') {
-      if (userInput === words[currentWordIndex]) {
-        setCurrentWordIndex(prev => prev + 1);
-        setUserInput('');
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Backspace") {
+        if (currentCharIndex > 0) {
+          setCharacters(prev => {
+            const newChars = [...prev];
+            newChars[currentCharIndex - 1].status = 'untyped';
+            return newChars;
+          });
+          setCurrentCharIndex(prev => prev - 1);
+        }
+      } else if (event.key.length === 1 && currentCharIndex < characters.length) {
+        setCharacters(prev => {
+          const newChars = [...prev];
+          newChars[currentCharIndex].status = event.key === characters[currentCharIndex].char ? 'correct' : 'incorrect';
+          return newChars;
+        });
+        setCurrentCharIndex(prev => prev + 1);
       }
-    } else if (event.key.length === 1) {
-      setUserInput(prev => prev + event.key);
-    }
-  }, [userInput, words, currentWordIndex]);
+    },
+    [characters, currentCharIndex]
+  );
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress]);
 
   useEffect(() => {
-    setUserInput('');
-    setCurrentWordIndex(0);
+    setCharacters(text.split("").map(char => ({ char, status: 'untyped' })));
+    setCurrentCharIndex(0);
   }, [text]);
 
   return (
-    <Box position="relative" width="100%" minHeight="100px" border="1px solid #ccc" borderRadius="md" p={4} fontSize="xl" fontFamily="monospace">
+    <Box
+      position="relative"
+      width="100%"
+      minHeight="100px"
+      border="1px solid #ccc"
+      borderRadius="md"
+      p={4}
+      fontSize="xl"
+      fontFamily="monospace"
+    >
       <Box position="relative" whiteSpace="pre-wrap" wordBreak="break-word">
-        {words.map((word, wordIndex) => (
-          <Text as="span" key={wordIndex} mr={2}>
-            {word.split('').map((char, charIndex) => {
-              const isCurrentWord = wordIndex === currentWordIndex;
-              const isTyped = isCurrentWord && charIndex < userInput.length;
-              const isCorrect = isTyped && char === userInput[charIndex];
-              
-              return (
-                <Text
-                  as="span"
-                  key={charIndex}
-                  color={isTyped ? (isCorrect ? 'green' : 'red') : 'gray'}
-                  textDecoration={isTyped && !isCorrect ? 'underline' : 'none'}
-                >
-                  {char}
-                </Text>
-              );
-            })}
-          </Text>
-        ))}
-      </Box>
-      <Box position="absolute" top={0} left={0} opacity={0.5}>
-        {userInput}
+        {characters.map((charObj, index) => {
+          const { char, status } = charObj;
+          const isSpace = char === " ";
+
+          return (
+            <Text
+              as="span"
+              key={index}
+              color={status === 'untyped' ? "gray" : (status === 'correct' ? "green" : "red")}
+              textDecoration={status === 'incorrect' ? "underline" : "none"}
+              backgroundColor={index === currentCharIndex ? "yellow" : "transparent"}
+            >
+              {isSpace ? "\u00A0" : char}
+            </Text>
+          );
+        })}
       </Box>
     </Box>
   );
