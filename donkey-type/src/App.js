@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import { generate } from 'random-words';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import { generate } from "random-words";
 import SubNavbar from "./SubNavbar";
-import algs from './algs.json';  // Import the JSON file
-import usages from './usages.json';  // Import the usages JSON file
-import wordsData from './words.json';  // Import the words JSON file
+import algs from "./algs.json"; // Import the JSON file
+import usages from "./usages.json"; // Import the usages JSON file
+import wordsData from "./words.json"; // Import the words JSON file
 
 function App() {
-  const [word, setWord] = useState('');  // Ensure word is initialized as a string
-  const [input, setInput] = useState('');
+  const [word, setWord] = useState(""); // Ensure word is initialized as a string
+  const [input, setInput] = useState("");
   const [correctChars, setCorrectChars] = useState([]);
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null);
   const [selectedUsage, setSelectedUsage] = useState(null);
@@ -23,24 +23,25 @@ function App() {
     } else if (selectedUsage) {
       setWord(selectedUsage.implementation);
     } else if (selectedWords.length > 0) {
-      setWord(selectedWords.join(' '));
+      setWord(selectedWords.join(" "));
     } else {
-      setWord(generate({ exactly: 30, join: ' ' }));
+      setWord(generate({ exactly: 30, join: " " }));
     }
 
     const handleKeyPress = (e) => {
       const char = e.key;
 
       if (typingEnabled) {
-        if (char.length === 1 && char !== 'Backspace') { // Only process single characters except backspace
-          setInput(prevInput => {
+        if (char.length === 1 && char !== "Backspace") {
+          // Only process single characters except backspace
+          setInput((prevInput) => {
             const newInput = prevInput + char;
             updateCorrectChars(newInput);
             return newInput;
           });
-        } else if (char === 'Backspace') {
-          setInput(prevInput => {
-            const newInput = prevInput.slice(0, -1);  // Remove last character
+        } else if (char === "Backspace") {
+          setInput((prevInput) => {
+            const newInput = prevInput.slice(0, -1); // Remove last character
             updateCorrectChars(newInput);
             return newInput;
           });
@@ -48,24 +49,25 @@ function App() {
       }
     };
 
-    document.addEventListener('keydown', handleKeyPress);
+    document.addEventListener("keydown", handleKeyPress);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyPress);
+      document.removeEventListener("keydown", handleKeyPress);
     };
   }, [selectedAlgorithm, selectedUsage, selectedWords, typingEnabled]);
 
   const updateCorrectChars = (value) => {
-    const formattedWord = typeof word === 'string' ? word.replace(/\n/g, '⏎') : ''; // Ensure word is a string
-    const newCorrectChars = formattedWord.split('').map((char, index) => {
+    const formattedWord =
+      typeof word === "string" ? word.replace(/\n/g, "⏎") : ""; // Ensure word is a string
+    const newCorrectChars = formattedWord.split("").map((char, index) => {
       if (index < value.length) {
         if (value[index] === char) {
-          return 'correct';
+          return "correct";
         } else {
-          return 'incorrect';
+          return "incorrect";
         }
       }
-      return 'default';
+      return "default";
     });
 
     setCorrectChars(newCorrectChars);
@@ -78,59 +80,70 @@ function App() {
   };
 
   const calculateAccuracy = (value) => {
-    const formattedWord = typeof word === 'string' ? word.replace(/\n/g, '') : '';
-    const correctCount = formattedWord.split('').reduce((count, char, index) => {
-      return index < value.length && value[index] === char ? count + 1 : count;
-    }, 0);
-    const accuracyPercentage = Math.round((correctCount / formattedWord.length) * 100);
+    const formattedWord =
+      typeof word === "string" ? word.replace(/\n/g, "") : "";
+    const correctCount = formattedWord
+      .split("")
+      .reduce((count, char, index) => {
+        return index < value.length && value[index] === char
+          ? count + 1
+          : count;
+      }, 0);
+    const accuracyPercentage = Math.round(
+      (correctCount / formattedWord.length) * 100
+    );
     setAccuracy(accuracyPercentage);
   };
 
   const handleNavSelect = (item) => {
     // Clear current input, correctChars, and accuracy
-    setInput('');
+    setInput("");
     setCorrectChars([]);
     setAccuracy(null); // Reset accuracy when navigating
     setTypingEnabled(true); // Enable typing
 
-    if (item === 'Algorithms') {
+    if (item === "Algorithms") {
       // Randomly select one of the algorithms from algs.json
       const algorithmKeys = Object.keys(algs.algorithms);
-      const randomAlgorithmKey = algorithmKeys[Math.floor(Math.random() * algorithmKeys.length)];
+      const randomAlgorithmKey =
+        algorithmKeys[Math.floor(Math.random() * algorithmKeys.length)];
       setSelectedAlgorithm(algs.algorithms[randomAlgorithmKey]);
-      setSelectedWords([]);  // Reset words when selecting algorithms
-      setSelectedUsage(null);  // Reset usage when selecting algorithms
-    } else if (item === 'Usages') {
+      setSelectedWords([]); // Reset words when selecting algorithms
+      setSelectedUsage(null); // Reset usage when selecting algorithms
+    } else if (item === "Usages") {
       // Select a random usage example from usages.json
       const usageKeys = Object.keys(usages.usages);
-      const randomUsageKey = usageKeys[Math.floor(Math.random() * usageKeys.length)];
+      const randomUsageKey =
+        usageKeys[Math.floor(Math.random() * usageKeys.length)];
       const randomUsage = usages.usages[randomUsageKey];
       setWord(randomUsage.implementation);
       setSelectedUsage({ name: randomUsageKey, implementation: randomUsage });
-      setSelectedAlgorithm(null);  // Reset algorithm when selecting usages
-      setSelectedWords([]);  // Reset words when selecting usages
-    } else if (item === 'Words') {
+      setSelectedAlgorithm(null); // Reset algorithm when selecting usages
+      setSelectedWords([]); // Reset words when selecting usages
+    } else if (item === "Words") {
       // Select 10 random words from words.json
-      const shuffledWords = wordsData.words.sort(() => 0.5 - Math.random()).slice(0, 10);
+      const shuffledWords = wordsData.words
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 10);
       setSelectedWords(shuffledWords);
-      setWord(shuffledWords.join(' '));
-      setSelectedAlgorithm(null);  // Reset algorithm when selecting words
-      setSelectedUsage(null);  // Reset usage when selecting words
+      setWord(shuffledWords.join(" "));
+      setSelectedAlgorithm(null); // Reset algorithm when selecting words
+      setSelectedUsage(null); // Reset usage when selecting words
     } else {
-      setSelectedAlgorithm(null);  // Reset if another item is selected
+      setSelectedAlgorithm(null); // Reset if another item is selected
       setSelectedWords([]);
-      setSelectedUsage(null);  // Reset usage when selecting other items
-      setWord(generate({ exactly: 30, join: ' ' }));
+      setSelectedUsage(null); // Reset usage when selecting other items
+      setWord(generate({ exactly: 30, join: " " }));
     }
   };
 
   const handleNewTest = () => {
     // Start a new test
-    setInput('');
+    setInput("");
     setCorrectChars([]);
     setAccuracy(null);
     setTypingEnabled(true);
-    handleNavSelect(''); // Reset to a default state if necessary
+    handleNavSelect(""); // Reset to a default state if necessary
   };
 
   return (
@@ -156,14 +169,12 @@ function App() {
       )}
       <div className="word-container">
         <code>
-          {typeof word === 'string' && word.split('').map((char, index) => (
-            <span
-              key={index}
-              className={`letter ${correctChars[index]}`}
-            >
-              {char}
-            </span>
-          ))}
+          {typeof word === "string" &&
+            word.split("").map((char, index) => (
+              <span key={index} className={`letter ${correctChars[index]}`}>
+                {char}
+              </span>
+            ))}
         </code>
       </div>
       {accuracy !== null && (
@@ -172,7 +183,9 @@ function App() {
         </div>
       )}
       {!typingEnabled && (
-        <button className="new-test-button" onClick={handleNewTest}>New Test</button>
+        <button className="new-test-button" onClick={handleNewTest}>
+          New Test
+        </button>
       )}
     </div>
   );
