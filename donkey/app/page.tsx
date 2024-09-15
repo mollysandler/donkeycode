@@ -3,29 +3,66 @@ import React, { useState } from "react";
 import styles from "./Page.module.css";
 import { Flex, Text, Box } from "@chakra-ui/react";
 import { TopNavBar } from "./TopNavBar/TopNavBar";
-// import { TypeInterface } from "./PlayArea/TypeInterface";
+import { TypeInterface } from "./PlayArea/TypeInterface";
+
+type WordsContent = string[];
+
+interface UsageContent {
+  name: string;
+  implementation: string;
+}
+
+interface AlgorithmContent extends UsageContent {
+  description: string;
+}
+
+type Content = WordsContent | UsageContent | AlgorithmContent;
 
 interface SelectedItem {
   type: "words" | "usage" | "algorithm";
-  content:
-    | string[]
-    | { name: string; implementation: string; description?: string };
+  content: Content;
 }
 
 export default function Home() {
   const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
 
-  const handleChanges = (
-    newItem:
-      | string[]
-      | { name: string; implementation: string; description?: string }
-  ) => {
+  const handleChanges = (newItem: Content) => {
     if (Array.isArray(newItem)) {
       setSelectedItem({ type: "words", content: newItem });
     } else if ("description" in newItem) {
       setSelectedItem({ type: "algorithm", content: newItem });
     } else {
       setSelectedItem({ type: "usage", content: newItem });
+    }
+  };
+
+  const renderContent = () => {
+    if (!selectedItem) return null;
+
+    switch (selectedItem.type) {
+      case "words":
+        return <TypeInterface text={(selectedItem.content as WordsContent).join(' ')} />;
+      case "usage":
+        return (
+          <Box>
+            <Text fontWeight="bold">
+              {(selectedItem.content as UsageContent).name}
+            </Text>
+            <TypeInterface text={(selectedItem.content as UsageContent).implementation} />
+          </Box>
+        );
+      case "algorithm":
+        return (
+          <Box>
+            <Text fontWeight="bold">
+              {(selectedItem.content as AlgorithmContent).name}
+            </Text>
+            <Text mt={2}>
+              {(selectedItem.content as AlgorithmContent).description}
+            </Text>
+            <TypeInterface text={(selectedItem.content as AlgorithmContent).implementation} />
+          </Box>
+        );
     }
   };
 
@@ -36,53 +73,9 @@ export default function Home() {
       </Text>
 
       <TopNavBar setChanges={handleChanges} />
-      {/* <TypeInterface text={selectedItem} /> */}
 
       <div className={styles.PlayArea}>
-        {selectedItem && (
-          <Box mt={4}>
-            {selectedItem.type === "words" && (
-              <Box>
-                <Text fontWeight="bold">Selected words:</Text>
-                <Text mt={2}>
-                  {(selectedItem.content as string[]).join(", ")}
-                </Text>
-              </Box>
-            )}
-            {selectedItem.type === "usage" && (
-              <Box>
-                <Text fontWeight="bold">
-                  {(selectedItem.content as { name: string }).name}
-                </Text>
-                <Text as="pre" mt={2}>
-                  {
-                    (selectedItem.content as { implementation: string })
-                      .implementation
-                  }
-                </Text>
-              </Box>
-            )}
-            {selectedItem.type === "algorithm" && (
-              <Box>
-                <Text fontWeight="bold">
-                  {(selectedItem.content as { name: string }).name}
-                </Text>
-                <Text mt={2}>
-                  {
-                    (selectedItem.content as { description: string })
-                      .description
-                  }
-                </Text>
-                <Text as="pre" mt={2}>
-                  {
-                    (selectedItem.content as { implementation: string })
-                      .implementation
-                  }
-                </Text>
-              </Box>
-            )}
-          </Box>
-        )}
+        {renderContent()}
       </div>
     </Flex>
   );
